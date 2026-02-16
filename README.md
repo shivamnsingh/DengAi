@@ -1,92 +1,67 @@
-🦟 DengAI – Dengue Fever Case Prediction
+# DengAI: Dengue Fever Prediction
 
-A machine learning project to predict weekly dengue fever cases using environmental and climate data for:
+Machine learning models to predict dengue fever cases in San Juan and Iquitos using environmental data.
 
-San Juan, Puerto Rico
+## Overview
 
-Iquitos, Peru
+This project predicts weekly dengue cases using climate and environmental variables including temperature, humidity, precipitation, and vegetation indices. Separate models are trained for San Juan, Puerto Rico (936 weeks) and Iquitos, Peru (520 weeks).
 
-Built with a focus on performance, structured modeling, and time-aware validation.
+## Dataset
 
-📌 Overview
+**Features:**
+- NDVI vegetation indices (4 directions)
+- Temperature measurements (Kelvin & Celsius)
+- Humidity metrics
+- Precipitation data
 
-Dengue fever outbreaks are strongly influenced by climate conditions such as temperature, humidity, and rainfall.
+**Target:** Weekly dengue case counts
 
-This project builds city-specific regression models to forecast weekly case counts using historical environmental data.
+## Methodology
 
-Instead of combining both cities into a single model, each location is modeled independently due to major climatic differences.
+1. **Preprocessing:** Forward/backward fill for missing values
+2. **Feature Selection:** Correlation-based selection per city
+3. **Model:** Linear Regression with StandardScaler
+4. **Validation:** 80-20 temporal split
 
-🛠 Tech Stack
+### Selected Features
 
-Data Processing: Polars, NumPy
+**San Juan:** Humidity, temperature, and precipitation variables  
+**Iquitos:** Temperature range, NDVI indices, and station temperatures
 
-Visualization: Matplotlib, Seaborn
+## Results
 
-Machine Learning: Scikit-Learn
+| City | Dataset Size | Model |
+|------|--------------|-------|
+| San Juan | 936 observations | Linear Regression |
+| Iquitos | 520 observations | Linear Regression |
 
-Model Used: Linear Regression
+## Installation
+```bash
+pip install polars numpy scikit-learn matplotlib seaborn
+```
 
-Scaling: StandardScaler
+## Usage
+```python
+python dengai_analysis.py
+```
 
-⚙️ Approach
-1. Data Preparation
+## Tech Stack
 
-Merged features and labels using city, year, and weekofyear
+- **Data Processing:** Polars, NumPy
+- **ML:** scikit-learn
+- **Visualization:** Matplotlib, Seaborn
 
-Handled missing values using forward and backward fill
+## Future Work
 
-Split dataset into:
+- Time series models (ARIMA, LSTM)
+- Ensemble methods
+- Lag features
+- Hyperparameter optimization
 
-sj_df (San Juan)
+## License
 
-iq_df (Iquitos)
+MIT License
 
-2. Exploratory Data Analysis
+---
 
-Generated correlation matrices for both cities
-
-Identified key environmental drivers influencing dengue cases
-
-Observed differing feature importance across cities
-
-3. Feature Engineering
-
-Selected high-correlation predictors
-
-Applied StandardScaler to normalize features
-
-4. Modeling
-
-Built separate Linear Regression models per city
-
-Used time-aware split (shuffle=False) to avoid data leakage
-
-Evaluated using Mean Squared Error (MSE)
-
-📊 Sample Output
-City	Year	Week	Actual	Predicted
-San Juan	2008	17	5	27.65
-Iquitos	2010	25	4	6.99
-
-
-🚀 Installation
-git clone https://github.com/your-username/dengue-prediction.git
-cd dengue-prediction
-pip install -r requirements.txt
-
-
-Run the notebook or main script to reproduce results.
-
-🔮 Future Improvements
-
-Time-series cross-validation
-
-Lag-based climate features
-
-Random Forest / XGBoost models
-
-Hyperparameter tuning
-
-📜 Note
-
-This project was developed for the DengAI competition and is intended for educational purposes only.
+*DrivenData Competition Entry*
